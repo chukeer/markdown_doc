@@ -1,7 +1,8 @@
+阅读原文 [http://littlewhite.us/archives/49](http://littlewhite.us/archives/49)
+<hr>
 >python解析网页，无出BeautifulSoup左右，此是序言
 
-###安装
----
+##安装
 BeautifulSoup4以后的安装需要用eazy_install，如果不需要最新的功能，安装版本3就够了，千万别以为老版本就怎么怎么不好，想当初也是千万人在用的啊。安装很简单
 
 	wget "http://www.crummy.com/software/BeautifulSoup/download/3.x/BeautifulSoup-3.2.1.tar.gz"
@@ -20,8 +21,7 @@ site-packages是存放Python第三方包的地方，至于这个目录在什么�
 如果你用的是Mac，哈哈，你有福了，我可以直接告诉你，Mac的这个目录在**/Library/Python/**下，这个下面可能会有多个版本的目录，没关系，放在最新的一个版本下的site-packages就行了。使用之前先import一下
 
 	from BeautifulSoup import BeautifulSoup
-###使用
----
+##使用
 在使用之前我们先来看一个实例  
 现在给你这样一个页面  
 <http://movie.douban.com/tag/喜剧>  
@@ -53,7 +53,7 @@ site-packages是存放Python第三方包的地方，至于这个目录在什么�
 	
 你没看错，这就是官方文档里的一个样例，如果你有耐心，看官方文档就足够了，后面的你都不用看  
 <http://www.leeon.me/upload/other/beautifulsoup-documentation-zh.html>  
-####初始化
+###初始化
 首先将上面的HTML代码赋给一个变量html如下，为了方便大家复制这里贴的是不带回车的，上面带回车的代码可以让大家看清楚HTML结构
 
 	
@@ -69,9 +69,9 @@ site-packages是存放Python第三方包的地方，至于这个目录在什么�
 	print soup.contents[0]
 	print soup.contents[1]
 前两个输出结果是一致的，就是整个html文档，第三条输出报错IndexError: list index out of range
-####查找节点
+###查找节点
 查找节点有两种反回形式，一种是返回单个节点，一种是返回节点list，对应的查找函数分别为find和findAll  
-#####单个节点
+####单个节点
 
 1. 根据节点名    
 
@@ -100,7 +100,7 @@ site-packages是存放Python第三方包的地方，至于这个目录在什么�
 		print p2.contents[0] ## 第一个子节点，输出u'This is paragraph'
 	contents上面已经提到过，它存储的是所有子节点的序列
 	
-#####多个节点
+####多个节点
 将上面介绍的find改为findAll即可返回查找到的节点列表，所需参数都是一致的  
 
 1. 根据节点名  
@@ -114,7 +114,7 @@ site-packages是存放Python第三方包的地方，至于这个目录在什么�
 	需要注意的是，虽然在这个例子中只找到一个节点，但返回的仍是一个列表对象  
 
 上面的这些基本查找功能已经可以应付大多数情况，如果需要各个高级的查找，比如正则式，可以去看官方文档  
-####获取文本
+###获取文本
 getText方法可以获取节点下的所有文本，其中可以传递一个字符参数，用来分割每个各节点之间的文本  
 
 	## 获取head节点下的文本
@@ -124,8 +124,7 @@ getText方法可以获取节点下的所有文本，其中可以传递一个字�
 	## 获取body下的所有文本并以\n分割
 	soup.body.getText('\n')     ## u'This is paragraph\none\n.\nThis is paragraph\ntwo\n.'
 	
-###实战
----
+##实战
 有了这些功能，文章开头给出的那个Demo就好做了，我们再来回顾下豆瓣的这个页面  
 <http://movie.douban.com/tag/喜剧>   
 如果要得到评分前100的所有电影，对这个页面需要提取两个信息：1、翻页链接；2、每部电影的信息（外链，图片，评分、简介、标题等）  
@@ -246,4 +245,4 @@ getText方法可以获取节点下的所有文本，其中可以传递一个字�
 OK，完成这一步接下来的事儿就自个看着办吧  
 本文只是介绍了BeautifulSoup的皮毛而已，目的是为了让大家快速学会一些基本要领，想当初我要用什么功能都是去BeautifulSoup的源代码里一个函数一个函数看然后才会的，一把辛酸泪啊，所以希望后来者能够通过更便捷的方式去掌握一些基本功能，也不枉我一字一句敲出这篇文章，尤其是这些代码的排版，真是伤透了脑筋  
  
- To be continued...
+<font color="red">**本文为作者原创，转载请注明出处，多谢！**</font>

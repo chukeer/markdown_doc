@@ -38,13 +38,13 @@
 	
 	* 下载系统安装包，对于不同版本的制作方式也不同，由于我制作的是10.9的系统，这里也以此为例，下载地址为 [http://pan.baidu.com/s/1hqDrQSG](http://pan.baidu.com/s/1hqDrQSG)，如果直接下载貌似速度比较慢，通过百度云管家下载会快一些，但是百度云管家只有windows版本的，所以身旁如果有windows电脑可以先用windows电脑下载好再拷贝到Mac上
 	
-	* 同时选中两个文件，双击解压，得到一个dmg后缀的文件，双击dmg文件，此时文件被挂在到了Mac上，通过Finder左侧的设备可以看到。怎么查看挂在的目录呢，打开终端软件，输入df -h，可以查看系统所有挂在的设备，最后一列是设备挂在的路径，相信聪明的你一定可以判断哪个路径对应哪个设备（一般通过名字和Size、Used等特征判断），此时确保U盘和系统安装包都被挂在了
+	* 同时选中两个文件，双击解压，得到一个dmg后缀的文件，双击dmg文件，此时文件被挂载到了Mac上，通过Finder左侧的设备可以看到。怎么查看挂载的目录呢，打开终端软件，输入df -h，可以查看系统所有挂载的设备，最后一列是设备挂载的路径，相信聪明的你一定可以判断哪个路径对应哪个设备（一般通过名字和Size、Used等特征判断），此时确保U盘和系统安装包都被挂载了
 	
 	* 打开终端软件，输入如下命令，其中有几个地方是需要替换成你自己的路径的
 	
 			sudo /Volumes/Install\ OS\ X\ Mavericks.app/Contents/Resources/createinstallmedia --volume /Volumes/Mavericks --applicationpath /Volumes/Install\ OS\ X\ Mavericks.app --nointeraction
 			
-		这条命令的意思是，通过路径为/Volumes/Install\ OS\ X\ Mavericks.app/Contents/Resources/createinstallmedia的程序，将文件/Volumes/Install\ OS\ X\ Mavericks.app安装到设备/Volumes/Mavericks中，其中/Volumes/Install\ OS\ X\ Mavericks.app是挂在的系统安装包，/Volumes/Mavericks是挂在的U盘（前面提到过，在抹掉时命名为Mavericks），将这几个替换成自己对应的路径就可以，注意，如果文件名里有空格，前面是要加反斜杠“\”的  
+		这条命令的意思是，通过路径为/Volumes/Install\ OS\ X\ Mavericks.app/Contents/Resources/createinstallmedia的程序，将文件/Volumes/Install\ OS\ X\ Mavericks.app安装到设备/Volumes/Mavericks中，其中/Volumes/Install\ OS\ X\ Mavericks.app是挂载的系统安装包，/Volumes/Mavericks是挂载的U盘（前面提到过，在抹掉时命名为Mavericks），将这几个替换成自己对应的路径就可以，注意，如果文件名里有空格，前面是要加反斜杠“\”的  
 		回车之后等待一会儿，U盘启动器就安装成功了
 		
 2. 从U盘启动系统
