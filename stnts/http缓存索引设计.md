@@ -29,8 +29,8 @@ http缓存分三级
         Entry **buckets;   // hash表数组
         HASHCMP *cmp;      // key比较函数
         HASHHASH *hash;    // 对key计算hash值的函数
-        unsigned int size; // hash表数组大小
-        int used;          // 已存储的hash节点数量
+        uint32_t size;     // hash表数组大小
+        uint32_t used;     // 已存储的hash节点数量
     };
     
 为简化设计，暂不考虑rehash，即当HashTable的used远远大于size时，不会扩大hash表使得节点分布更均匀
@@ -42,7 +42,7 @@ http缓存分三级
 
     struct Object
     {
-        unsigned int type:4; // 对象类型
+        uint32_t type:4; // 对象类型
         void *ptr;           // 指向对象内容的指针
     }
 
@@ -58,7 +58,7 @@ hash的key和value都由基本的对象表示，ptr指向实际的存储内容�
 
 这样索引格式如下
 
-![http缓存设计-step1](https://raw.githubusercontent.com/handy1989/markdown_doc/master/stnts/pic/http%E7%BC%93%E5%AD%98%E8%AE%BE%E8%AE%A1-step1.png)
+![http缓存设计-step1](http://7xsqu7.com1.z0.glb.clouddn.com/http%E7%BC%93%E5%AD%98%E8%AE%BE%E8%AE%A1-step1.png)
 
 这样索引的查找，增加，删除都使用hash表的基本接口，复杂度为O(1)，问题在于内存消耗太大，我们可以大致估算一下
 
@@ -76,33 +76,33 @@ hash表的每一对key-value都由一个Entry结构表示，key为URL，value为
 		uint32_t len;
 	};
 
-假设我们将索引信息持久化到1000个1M的小文件并对小文件进行编号，则该结构可唯一确定一段长度为len的磁盘数据，磁盘数据存储的是Url和MemIndex的固话信息，同事我们以URL的hash值（uint32_t）来索引DiskIndex数据，这样可另建一张hash表如下
+假设我们将索引信息持久化到1000个1M的小文件并对小文件进行编号，则该结构可唯一确定一段长度为len的磁盘数据，磁盘数据存储的是Url和MemIndex的固化信息，同时我们以URL的hash值（uint32_t）来索引DiskIndex数据，这样可另建一张hash表如下
 
-![http缓存设计-step2](https://raw.githubusercontent.com/handy1989/markdown_doc/master/stnts/pic/http%E7%BC%93%E5%AD%98%E8%AE%BE%E8%AE%A1-step2.png)
+![http缓存设计-step2](http://7xsqu7.com1.z0.glb.clouddn.com/http%E7%BC%93%E5%AD%98%E8%AE%BE%E8%AE%A1-step2.update.png)
 
 因为不同URl可能有同样的hash值，所以这里的value并不是一个DiskIndex对象，而是一个链表
 
-这样，新增一个URl对应缓存资源的步骤如下
+这样，新增一个缓存索引的步骤如下
 
 1. 计算Url hash值
 2. 通过hash值去hash_table里查找DiskIndex链表
 3. 若未找到，则在持久化文件里获取一个可用的分片，将Url和MemIndex信息写入，创建一个hash节点并在DiskIndex链表头插入一个节点
 
-查找一个Url对应缓存资源步骤如下
+查找缓存资源步骤如下
 
 1. 计算Url的hash值
 2. 通过hash值去hash_table里查找DiskIndex链表
 3. 遍历链表，根据DiskIndex读取磁盘分片，得到具体的Url和MemIndex信息，并和查询Url进行比较，定位到MemIndex
 4. 根据MemIndex信息定位到缓存资源（此时只有磁盘缓存信息，没有内存缓存信息）
 
-删除一个URl对应缓存资源的步骤如下
+删除缓存资源的步骤如下
 
 1. 计算Url hash值
 2. 通过hash值去hash_table里查找DiskIndex链表
 3. 遍历链表，根据DiskIndex读取磁盘分片，得到具体Url和MemIndex信息，并和Url进行比较，定位到MemIndex
 4. 根据MemIndex信息删除缓存资源，并且根据DiskIndex信息读取完整1M索引持久化信息，并更新之
 
-所有操作复杂度均为O(1)，只是多了一次磁盘IO（仅当查找到hash值时才会有，当hash值冲突时才会增加磁盘IO），并且key value一共只有12个字节，即便加上指针开销，平均一个Entry的开销也只有大约20字节，索引30000000文件需要的内存开销为
+所有操作复杂度均为O(1)，只是多了一次磁盘IO（仅当查找到hash值时才会有磁盘IO，当hash值冲突时才会增加磁盘IO），并且key value一共只有12个字节，即便加上指针开销，平均一个Entry的开销也只有大约20字节，索引30000000文件需要的内存开销为
 
 	30000000 * 20B = 600M
 
@@ -116,13 +116,13 @@ hash表的每一对key-value都由一个Entry结构表示，key为URL，value为
 其中tb[0]中存的是Url到MemIndex的映射，tb[1]存的是hash(Url)到DiskIndex的映射，在查找时，先查tb[0]，如果没有找到再查tb[1]
 
 ### 两层索引
-我们可能需要对缓存资源做站点级别的操作，比如清楚某个站点的缓存，持久化某个站点的缓存，统计某个站点的缓存等等，如果只以一层hash结构无法快速得到指定站点信息，因此可以做两层索引如下
+我们可能需要对缓存资源做站点级别的操作，比如清除某个站点的缓存，持久化某个站点的缓存，统计某个站点的缓存等等，如果只以一层hash结构无法快速得到指定站点信息，因此可以做两层索引如下
 
-![](http://i.imgur.com/L5OFWS6.png)
+![http缓存设计-step3](http://7xsqu7.com1.z0.glb.clouddn.com/http%E7%BC%93%E5%AD%98%E8%AE%BE%E8%AE%A1-step3.png)
 
-这里只列出了MemIndex的两层索引，同理可得DiskIndex的两层索引，这样缓存结构仍旧为CacheIndex保持不变，只是每次查找先根据site查找，得到的是一个HashObject，然后在根据URL后半段查找，具体步骤就不详述了。由于站点数量优先，所以增加一级索引对内存开销并不大
+这里只列出了MemIndex的两层索引，同理可得DiskIndex的两层索引，这样缓存结构仍旧为CacheIndex保持不变，只是每次查找先根据site查找，得到的是一个HashObject，然后在根据URL后半段查找，具体步骤就不详述了。由于站点数量有限，所以增加一级索引对内存开销并不大
 
-### 对于带偏移的资源的索引
+### 分片请求的索引
 分片请求主要有两种表现形式
 
 1. 将参数直接写在URL中，比如爱奇艺的视频链接
@@ -139,15 +139,17 @@ hash表的每一对key-value都由一个Entry结构表示，key为URL，value为
 
 	示例如下
 
-	![](http://i.imgur.com/aPge4yh.png)
+	![curl Range](http://7xsqu7.com1.z0.glb.clouddn.com/Range.png)
     
 	资源xx一共有10个字节，当我们指定Range字段时会返回对应的字节
 
 形式1太过定制化，链接格式千变万化，且无法预知具体哪个字段标记了实际的Range信息，对于这种链接可将分片链接当作单独的资源缓存。形式2具有普遍性，是http标准协议，下面主要讨论这种形式的处理方式
 
-从示例图片可以看到，在请求不同Range时，客户端发送的URL其实是一样的，比较极端的处理方式可以将URL对应的完整资源缓存称一个文件，当有不通Range请求过来时，直接返回缓存文件对应的分片即可。我们假设带Range信息的请求总是从资源头部开始的，当客户端请求Range: bytes=0-1000时，我们实际上会去请求完整文件，并且在原始服务器返回0-1000字节后即返回给客户端，如果接下来请求Range: bytes=1001-2000时，缓存即为命中，只需等待原始服务器返回1001-2001字节请即可返回给客户端
+从示例图片可以看到，在请求不同Range时，客户端发送的URL其实是一样的，比较极端的处理方式可以将URL对应的完整资源缓存成一个文件，当有不同Range请求过来时，直接返回缓存文件对应的分片即可。我们假设带Range信息的请求总是从资源头部开始的，当客户端请求Range: bytes=0-1000时，我们实际上会去请求完整文件，并且在原始服务器返回0-1000字节后即返回给客户端，如果接下来请求Range: bytes=1001-2000时，缓存即为命中，只需等待原始服务器返回1001-2001字节请即可返回给客户端
 
 按这种方式，上面的索引方式无需改变，一个URL仍旧对应一个缓存资源，只需根据Range字段做相应处理即可，但是问题在于，如果客户端一开始请求Range: bytes=1001-2000的分片，我们仍旧需要向原始服务器请求完整文件，并且一直要等到1000-2001字节返回后才能返回给客户端，也就是说原始服务器返回0-1000字节的这段时间内我们是不会响应客户端的，因此会增加客户端的等待时间
+
+>PS: squid即可通过参数配置按以上方式工作
 
 如果需要对分片信息进行单独索引，在以上缓存索引设计的基础上，只需要改变一个结构即可
 
@@ -160,4 +162,35 @@ hash表的每一对key-value都由一个Entry结构表示，key为URL，value为
 		void* data;
 	};
 
-其中start和end描述分片信息里的字段，data为该分片对应的内存数据。假设资源xx在缓存系统中的磁盘缓存文件为test_xx，我们约定Range: bytes=0-1000请求对应的缓存文件为test_xx.0-1000这种格式，因此根据Range字段即可定位到磁盘缓存文件
+其中start和end描述分片信息里的字段，data为该分片对应的内存数据。假设资源xx在缓存系统中的磁盘缓存文件为test\_xx，我们约定Range: bytes=0-1000请求对应的缓存文件为test\_xx.0-1000这种格式，因此根据Range字段即可定位到分片的磁盘缓存文件
+
+我们在MemIndex中增加一个字段，定义如下
+
+	struct MemIndex
+    {
+        FileInfo* file_info; // 缓存资源在磁盘上的信息 
+        MemObject* mem_obj;  // 缓存资源在内存中的信息，仅当缓存资源被加载到内存时才有效
+		list<Range>* ranges; // 记录分片请求信息，以start字段升序排列
+    };
+
+假设我们已经接受了Range分别为0-1000， 1001-2000， 3001-4000的请求，则Range缓存信息如下
+
+![Range链表示例](http://7xsqu7.com1.z0.glb.clouddn.com/Range%E9%93%BE%E8%A1%A8%E7%A4%BA%E4%BE%8B.png)
+
+当我们请求Range: bytes=0-1500时，在链表里查找第一个start<=0的节点和第一个end>=1500的节点，并且这两个几点之间的所有节点的Rang必须连续，即当前节点的start比前一个节点的end大1，此时即认为命中，依次将这些节点里的void* data按需返回给客户端即可，若data为NULL，则根据start和end参数读取磁盘文件返回给客户端
+
+如果请求Range: bytes=1001-4000，根据规则，由于node2和node3的Range信息不连续，因此不命中
+
+**Range的合并**
+
+以上示例中node1和node2有着连续的Range，可采取某种触发机制让其合并，合并后的Range信息为
+
+![Range链表示例2](http://7xsqu7.com1.z0.glb.clouddn.com/Range%E9%93%BE%E8%A1%A8%E7%A4%BA%E4%BE%8B2.png)
+
+**Range的覆盖**
+
+当新增加的Range范围大于原来的Range时可将原Rang信息覆盖，还是以上图为例，假设请求Range为3001-5000，当请求结束后，node2将会被替换，如下
+
+![Range链表示例3](http://7xsqu7.com1.z0.glb.clouddn.com/Range%E9%93%BE%E8%A1%A8%E7%A4%BA%E4%BE%8B3.png)
+
+这样，原索引结构无需改变，仍旧以Url为key进行查找，只是在MemIndex里增加一个结构专门管理Range信息，当请求带Range字段时需要额外查找Range信息
