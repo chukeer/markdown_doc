@@ -50,7 +50,7 @@ hash的key和value都由基本的对象表示，ptr指向实际的存储内容�
 
 这样索引格式如下
 
-![http缓存设计-step1](http://7xsqu7.com1.z0.glb.clouddn.com/http%E7%BC%93%E5%AD%98%E8%AE%BE%E8%AE%A1-step1.png)
+![http缓存设计-step1](http://littlewhite.us/pic/stnts/http-cache-step1.png)
 
 这样索引的查找，增加，删除都使用hash表的基本接口，复杂度为O(1)，问题在于内存消耗太大，我们可以大致估算一下
 
@@ -70,7 +70,7 @@ hash表的每一对key-value都由一个Entry结构表示，key为URL，value为
 
 假设我们将索引信息持久化到1000个1M的小文件并对小文件进行编号，则该结构可唯一确定一段长度为len的磁盘数据，磁盘数据存储的是Url和MemIndex的固化信息，同时我们以URL的hash值（uint32_t）来索引DiskIndex数据，这样可另建一张hash表如下
 
-![http缓存设计-step2](http://7xsqu7.com1.z0.glb.clouddn.com/http%E7%BC%93%E5%AD%98%E8%AE%BE%E8%AE%A1-step2.update.png)
+![http缓存设计-step2](http://littlewhite.us/pic/stnts/http-cache-step2.png)
 
 因为不同URl可能有同样的hash值，所以这里的value并不是一个DiskIndex对象，而是一个链表
 
@@ -110,23 +110,39 @@ hash表的每一对key-value都由一个Entry结构表示，key为URL，value为
 ### 优化
 索引的目的是通过URL快速定位到缓存文件，在定位缓存文件的过程中，我们希望尽量减少磁盘IO，查找CacheIndex的tb[0]时是不会有磁盘IO的，但是查找tb[1]可能会有多次磁盘IO，以下是其hash结构
 
-![hash桶结构1](http://7xsqu7.com1.z0.glb.clouddn.com/hash%E6%A1%B6%E7%BB%93%E6%9E%841.png)
+![hash桶结构1](http://littlewhite.us/pic/stnts/hash-bucket1.png)
 
 当我们通过URL的hash值查找时，假设落到了bucket[0]，此时bucket[0]上挂有3个hash节点，这些hash节点的hash值可能相同也可能不同（不同的hash值可能映射到相同的bucket），根据前面的设计，我需要对hash值相同的节点（Entry1, Entry2, Entry3）和被查找的URL进行比较，而Entry里并没有存储URL，只存了持久化文件的offset和len，因此需要读一次磁盘才能进行比较，相同hash值越多，查找一次需要读磁盘的次数就越多
 
 我们将hash值相同的Entry做一个合并，如下
 
-![hash桶结构2](http://7xsqu7.com1.z0.glb.clouddn.com/hash%E6%A1%B6%E7%BB%93%E6%9E%842.png)
+![hash桶结构2](http://littlewhite.us/pic/stnts/hash-bucket2.png)
 
 Entry1下对应的offset和len其实是原来的三个节点的持久化信息，这样我们可以通过一次磁盘IO读取所有hash值相同的索引信息，不管hash冲突多少次，每次查找都只有一次磁盘IO
 
 ### 索引块大小
 当tb[1]进行删除或新增操作时，我们需要更新其对应的索引块，这样会对后面所有索引的offset发生影响，需要全部做一次调整，索引块按1M算，每个索引结构按200字节算，假设更新的正好在1M开头部分，则后面一共约50000个索引需要更新offset，这将是带来很大的CPU浪费，因此索引块大小需要调整为合适的大小，并且一个索引块能容纳下一个Entry对应的持久化信息，若不能容纳，可将索引块通过指针串起来
 
+### 索引信息持久化和恢复
+以上两张hash表在服务运行过程都是在内存中，当服务器重启之后有必要重建两张hash表，因此要考虑hash的持久化和恢复
+
+
+第一张hash由于数据量较少，可以直接存储到一个文件中，按key-value格式存储即可，如下
+
+![hash1-persist](http://littlewhite.us/pic/stnts/hash1-persist.png)
+
+根据这样的文件格式，恢复hash表也很容易，读取一个数据块后将URL-MemInfo写入hash表即可
+
+第二张表由于本身就对应磁盘文件，可以不需要做持久化，我们设计每个hash结构的对应磁盘分片格式如下
+
+![hash1-persist](http://littlewhite.us/pic/stnts/hash2-persist.png)
+
+通过从磁盘读取这样的数据，可直接恢复对应的hash节点
+
 ### 站点索引
 我们可能需要对缓存资源做站点级别的操作，比如清除某个站点的缓存，持久化某个站点的缓存，统计某个站点的缓存等等，如果只以一层hash结构无法快速得到指定站点信息，因此可以做两层索引如下
 
-![http缓存设计-step3](http://7xsqu7.com1.z0.glb.clouddn.com/http%E7%BC%93%E5%AD%98%E8%AE%BE%E8%AE%A1-step3.png)
+![http缓存设计-step3](http://littlewhite.us/pic/stnts/http-cache-step3.png)
 
 这里只列出了MemIndex的两层索引，同理可得DiskIndex的两层索引，这样缓存结构仍旧为CacheIndex保持不变，只是每次查找先根据site查找，得到的是一个HashObject，然后在根据URL后半段查找，具体步骤就不详述了。由于站点数量有限，所以增加一级索引对内存开销并不大
 
@@ -147,7 +163,7 @@ Entry1下对应的offset和len其实是原来的三个节点的持久化信息�
 
 	示例如下
 
-	![curl Range](http://7xsqu7.com1.z0.glb.clouddn.com/Range.png)
+	![curl Range](http://littlewhite.us/pic/stnts/Range.png)
     
 	资源xx一共有10个字节，当我们指定Range字段时会返回对应的字节
 
@@ -183,7 +199,7 @@ Entry1下对应的offset和len其实是原来的三个节点的持久化信息�
 
 假设我们已经接受了Range分别为0-1000， 1001-2000， 3001-4000的请求，则Range缓存信息如下
 
-![Range链表示例](http://7xsqu7.com1.z0.glb.clouddn.com/Range%E9%93%BE%E8%A1%A8%E7%A4%BA%E4%BE%8B.png)
+![Range链表示例](http://littlewhite.us/pic/stnts/Range-list-case.png)
 
 当我们请求Range: bytes=0-1500时，在链表里查找第一个start<=0的节点和第一个end>=1500的节点，并且这两个几点之间的所有节点的Rang必须连续，即当前节点的start比前一个节点的end大1，此时即认为命中，依次将这些节点里的void* data按需返回给客户端即可，若data为NULL，则根据start和end参数读取磁盘文件返回给客户端
 
@@ -193,12 +209,12 @@ Entry1下对应的offset和len其实是原来的三个节点的持久化信息�
 
 以上示例中node1和node2有着连续的Range，可采取某种触发机制让其合并，合并后的Range信息为
 
-![Range链表示例2](http://7xsqu7.com1.z0.glb.clouddn.com/Range%E9%93%BE%E8%A1%A8%E7%A4%BA%E4%BE%8B2.png)
+![Range链表示例2](http://littlewhite.us/pic/stnts/Range-list-case2.png)
 
 **Range的覆盖**
 
 当新增加的Range范围大于原来的Range时可将原Rang信息覆盖，还是以上图为例，假设请求Range为3001-5000，当请求结束后，node2将会被替换，如下
 
-![Range链表示例3](http://7xsqu7.com1.z0.glb.clouddn.com/Range%E9%93%BE%E8%A1%A8%E7%A4%BA%E4%BE%8B3.png)
+![Range链表示例3](http://littlewhite.us/pic/stnts/Range-list-case3.png)
 
 这样，原索引结构无需改变，仍旧以Url为key进行查找，只是在MemIndex里增加一个结构专门管理Range信息，当请求带Range字段时需要额外查找Range信息
