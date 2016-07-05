@@ -1,3 +1,4 @@
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 # http缓存服务器淘汰策略分析
 
 根据设计需求，一共有三级缓存，分别是内存，SSD，磁盘，所以缓存资源淘汰路径可以是
