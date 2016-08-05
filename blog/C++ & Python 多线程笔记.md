@@ -172,9 +172,7 @@
 	
 	def start_threads(thread_num):
 	    pool = ThreadPool(thread_num)
-	    args = []
-	    for i in range(thread_num):
-	        args.append((i, "Hello World!"))
+	    args = [(i, "Hello World!") for i in range(thread_num)]
 	    pool.map(proc, args)
 	    pool.close()
 	    pool.join()
