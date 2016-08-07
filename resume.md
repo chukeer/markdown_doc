@@ -10,6 +10,7 @@
 * 熟练掌握Linux工具如vim，grep，sed，awk的使用以及shell编程技巧
 * 了解和使用过squid, redis, thrift, boost, libevent, protobuf, glog, zookeeper, hadoop等开源系统和框架
 * 熟悉http协议及socket编程
+* 熟悉svn/git等版本控制工具等使用
 
 ### 项目经历
 #### 2014-now 湖北某一线互联网公司
