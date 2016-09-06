@@ -5,6 +5,8 @@ Tags: linux
 Slug: 如何打造舒适的linux开发环境
 Author: littlewhite
 
+[TOC]
+
 ![](http://littlewhite.us/pic/linux_ssh.png)
 首先要说明的是今天讲的不是安装教程，而是讲使用方式。写这篇文章的初衷是考虑到很多在校大学生对Linux接触较少，即便接触也只是装装系统，没有实际用过Linux开发环境，而互联网公司普遍都是Linux开发环境，可以说整个互联网就是建立在Linux服务器之上，因此越早使用Linux，工作之后就能越快上手。但如果你的方向是windows客户端开发，那后面的内容都没必要看了。
 

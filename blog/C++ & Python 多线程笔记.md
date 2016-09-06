@@ -6,6 +6,8 @@ Tags: c++, python
 Slug: C++ & Python 多线程笔记
 Author: littlewhite
 
+[TOC]
+
 ## C++
 ### Posix多线程
 	

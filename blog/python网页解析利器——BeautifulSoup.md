@@ -5,6 +5,8 @@ Tags: python
 Slug: python网页解析利器——BeautifulSoup
 Author: littlewhite
 
+[TOC]
+
 >python解析网页，无出BeautifulSoup左右，此是序言
 
 ## 安装
