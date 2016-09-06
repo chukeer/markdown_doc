@@ -1,4 +1,10 @@
-#curl参数说明
+Title: curl参数说明 
+Date: 2016-09-06
+Category: Skill
+Tags: curl
+Slug: curl参数说明
+Author: littlewhite
+
 参数 | 说明 
 --- | --- 
 -i/--include | 输出响应包头
