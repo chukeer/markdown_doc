@@ -82,7 +82,7 @@ connfd_arr存储的时当前连接的文件描述符，设置了一个最大连�
 由于服务端需要根据用户输入的消息来调用相应处理函数，比如login name对应的登录函数，look对应查看用户的函数，所以服务端需要根据字符串去调用一个函数，最简单的实现就是写若干个if语句一一比较，但我们用了一种更优雅的方式，首先我们将所有处理函数定义成一样的类型，也就是参数和返回值都一样，然后定义一个map型变量，key为命令的关键字，如“login”"logout"等等，value就是对应的处理函数的地址，这样我们接收到客户端的消息后，解析出是哪种命令，然后直接查找map得到函数地址，就可以调用对应函数了
 
 服务端和客户端完整代码见[https://github.com/handy1989/chatserver/tree/version1.0.1](https://github.com/handy1989/chatserver/tree/version1.0.1)，客户端运行之后的效果如下  
-![](http://littlewhite.us/pic/client.tiff)  
+![](http://littlewhite.us/pic/client.jpg)  
 这里只是演示了一个用户登录的情况，感兴趣的可以多个客户端同时连接看看效果  
 ###小结
 ===
