@@ -1,3 +1,11 @@
+Title: libevent evhttp学习——http客户端
+Date: 2016-09-06
+Modified: 2016-09-06
+Category: Language
+Tags: c++, libevent
+Slug: libevent evhttp学习——http客户端
+Author: littlewhite
+
 ## 基本环境
 使用版本为libevent-2.1.5，目前为beta版，其中evhttp和旧版区别在于新增了如下接口
 

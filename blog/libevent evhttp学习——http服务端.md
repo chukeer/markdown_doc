@@ -1,3 +1,11 @@
+Title: libevent evhttp学习——http服务端
+Date: 2016-09-06
+Modified: 2016-09-06
+Category: Language
+Tags: c++
+Slug: libevent evhttp学习——http服务端
+Author: littlewhite
+
 # libevent evhttp学习——http服务端
 http服务端相对客户端要简单很多，我们仍旧使用libevent-2.1.5版本，服务端接口和2.0版本没有区别
 

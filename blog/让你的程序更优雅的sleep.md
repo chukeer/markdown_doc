@@ -1,4 +1,10 @@
-#让你的程序更优雅的sleep
+Title: 让你的程序更优雅的sleep
+Date: 2016-09-06
+Modified: 2016-09-06
+Category: Language
+Tags: c++
+Slug: 让你的程序更优雅的sleep
+Author: littlewhite
 
 sleep的作用无需多说，几乎每种语言都提供了类似的函数，调用起来也很简单。sleep的作用无非是让程序等待若干时间，而为了达到这样的目的，其实有很多种方式，最简单的往往也是最粗暴的，我们就以下面这段代码来举例说明（**注：本文提及的程序编译运行环境为Linux**）
 

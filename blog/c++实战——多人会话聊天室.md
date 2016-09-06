@@ -1,4 +1,11 @@
-##C++实战——多人会话聊天室
+Title: c++实战——多人会话聊天室
+Date: 2016-09-06
+Modified: 2016-09-06
+Category: Language
+Tags: c++
+Slug: c++实战——多人会话聊天室
+Author: littlewhite
+
 >无他，但手熟尔  
  ——《卖油翁》
 
