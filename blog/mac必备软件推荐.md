@@ -1,7 +1,7 @@
 Title: Mac必备软件推荐 
 Date: 2016-09-06
 Category: Skill
-Tags: curl
+Tags: 
 Slug: Mac必备软件推荐
 Author: littlewhite
 

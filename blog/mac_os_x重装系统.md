@@ -1,7 +1,7 @@
 Title: Mac OS X重装操作系统
 Date: 2016-09-06
 Category: Skill
-Tags: curl
+Tags: 
 Slug: Mac OS X重装操作系统
 Author: littlewhite
 
