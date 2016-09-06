@@ -45,4 +45,4 @@ page类型的网页都是根据模板生成的，wordpress默认没有这一类�
 	?>
 保存好之后，再去wordpress后台新建一个页面，注意不是发表文章，而是在仪表盘的“页面”一栏里选择新建页面，标题写“全部文章”，内容为空，别名（固定链接）设置为“<font color="red" >allpost</font>”，注意这里的别名必须和之前的脚本名page-allpost.php对应。点击保存，然后刷新你的站点首页，看看导航栏里是不是有了“全部文章”选项，点击进去看看是不是如下效果  
 
-![image](/pic/allpost_screenshot.png)
+![image](http://littlewhite.us/pic/allpost_screenshot.png)
