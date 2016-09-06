@@ -26,10 +26,10 @@ http客户端使用到的接口函数及请求流程如下
 
 1. 初始化event\_base和evdns\_base
 
-	```cpp
+```cpp
 	struct event_base *event_base_new(void);
-	struct evdns_base * evdns_base_new(struct event_base *event_base, int initialize_nameservers);
-	```
+    struct evdns_base * evdns_base_new(struct event_base *event_base, int initialize_nameservers);
+```
 2. 创建evhttp_request对象，并设置回调函数，这里的回调函数是和数据接收相关的
 
 	```cpp
