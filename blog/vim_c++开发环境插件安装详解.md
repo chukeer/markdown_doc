@@ -1,4 +1,12 @@
-#vim C++开发环境插件安装详解
+Title: Vim c++开发环境插件安装详解
+Date: 2016-09-06
+Category: Skill
+Tags: vim, c++
+Slug: Vim c++开发环境插件安装详解
+Author: littlewhite
+
+[TOC]
+
 >C/C++是使用比例最高的程序语言，而vim是专为程序员开发的编辑器，当这两者结合起来，会给我们带来怎样的效果呢。
 
 对于windows上做C++开发的用户来说，vs为他们做了大量的工作，语法高亮、自动缩进、智能提示等等，当你happy的使用vs时，请记住一点，这是一个收费软件，虽然在我大中华普遍都在使用微软的盗版软件，但作为程序员我们心里应该知道这是不对的行为，然后再去——等等，我们今天讨论的不是这个话题，我们要说的是Linux下的免费软件vim！
@@ -276,7 +284,9 @@ taglist是vim的一个插件，可以将代码内的函数、变量等按规律�
 	ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++
 	
 这样就生成了tags文件，然后我们打开main.cpp来测试，当输入hello.h和hello.cpp中的函数或结构体时，通过按`ctr+x ctr+o`就可以自动补全了，效果如下
+
 ![](http://littlewhite.us/pic/omni_main.png)  
+
 通过按ctr+n和ctr+p可以对候选项进行上下选择。通过这种方式可以实现对函数、结构体的补全
 
 **对STL补全**
@@ -293,7 +303,7 @@ taglist是vim的一个插件，可以将代码内的函数、变量等按规律�
 	set tags+=~/.vim/tags/cpp_src/tags
 	
 该命令是设置tags文件的搜索路径，默认只有vim工作目录的tags文件，这样设置之后就会同时加载指定目录的tags文件，你可以在后面添加更多其它第三方库的tags文件，现在对STL的补全效果如下
-<div align="center"><img src="http://littlewhite.us/pic/omni_stl.png"></div>
+![](http://littlewhite.us/pic/omni_stl.png)
 
 omnicppcomplete的补全设置虽然麻烦，但也让我们更加清楚了插件是怎样工作的，作为程序员，至少应该对某些东西的工作原理搞清楚，而不是像使用IDE一样不管任何东西，你想自定义一下东西也无从下手。
 

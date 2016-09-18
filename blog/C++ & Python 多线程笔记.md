@@ -1,4 +1,13 @@
-# C++ & Python 多线程笔记
+Title: C++ & Python 多线程笔记
+Date: 2016-09-06
+Modified: 2016-09-06
+Category: Language
+Tags: c++, python
+Slug: C++ & Python 多线程笔记
+Author: littlewhite
+
+[TOC]
+
 ## C++
 ### Posix多线程
 	

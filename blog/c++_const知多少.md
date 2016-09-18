@@ -1,4 +1,13 @@
-#C++ const知多少
+Title: C++ const知多少 
+Date: 2016-09-06
+Modified: 2016-09-06
+Category: Language
+Tags: c++
+Slug: C++ const知多少
+Author: littlewhite
+
+[TOC]
+
 ###const修饰变量
 
 关于const最常见的一个面试题是这样的：char \*const和const char\*有什么区别，大家都知道const修饰符代表的是常量，即const修饰的变量一旦被初始化是不能被更改的，这两个类型一个代表的是指针不可变，一个代表指针指向内容不可变，但具体哪个对应哪个，很多人一直搞不清楚。

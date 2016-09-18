@@ -1,4 +1,13 @@
-#python import备忘笔记
+Title: Python import机制备忘笔记
+Date: 2016-09-06
+Modified: 2016-09-06
+Category: Language
+Tags: python
+Slug: Python import机制备忘笔记
+Author: littlewhite
+
+[TOC]
+
 python的模块有两种组织方式，一种是单纯的python文件，文件名就是模块名，一种是包，包是一个包含了若干python文件的目录，目录下必须有一个文件`__init__.py`，这样目录名字就是模块名，包里的python文件也可以通过`包名.文件名`的方式import
 ###import语法
 import语法有两种

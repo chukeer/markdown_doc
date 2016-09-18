@@ -1,3 +1,13 @@
+Title: libevent evhttp学习——http客户端
+Date: 2016-09-06
+Modified: 2016-09-06
+Category: Language
+Tags: c++, libevent
+Slug: libevent evhttp学习——http客户端
+Author: littlewhite
+
+[TOC]
+
 ## 基本环境
 使用版本为libevent-2.1.5，目前为beta版，其中evhttp和旧版区别在于新增了如下接口
 
@@ -18,10 +28,10 @@ http客户端使用到的接口函数及请求流程如下
 
 1. 初始化event\_base和evdns\_base
 
-	```cpp
+```cpp
 	struct event_base *event_base_new(void);
-	struct evdns_base * evdns_base_new(struct event_base *event_base, int initialize_nameservers);
-	```
+    struct evdns_base * evdns_base_new(struct event_base *event_base, int initialize_nameservers);
+```
 2. 创建evhttp_request对象，并设置回调函数，这里的回调函数是和数据接收相关的
 
 	```cpp

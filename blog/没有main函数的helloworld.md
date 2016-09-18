@@ -1,4 +1,13 @@
-#没有main函数的helloworld
+Title: 没有main函数的helloworld
+Date: 2016-09-06
+Modified: 2016-09-06
+Category: Language
+Tags: c++
+Slug: 没有main函数的helloworld
+Author: littlewhite
+
+[TOC]
+
 几乎所有程序员的第一堂课都是学习helloworld程序，下面我们先来重温一下经典的C语言helloworld
 
 	/* hello.c */

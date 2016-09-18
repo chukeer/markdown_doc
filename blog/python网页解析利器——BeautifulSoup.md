@@ -1,3 +1,12 @@
+Title: python网页解析利器——BeautifulSoup
+Date: 2016-09-06
+Category: Language
+Tags: python
+Slug: python网页解析利器——BeautifulSoup
+Author: littlewhite
+
+[TOC]
+
 >python解析网页，无出BeautifulSoup左右，此是序言
 
 ## 安装
@@ -19,7 +28,7 @@ site-packages是存放Python第三方包的地方，至于这个目录在什么�
 
 如果你用的是Mac，哈哈，你有福了，我可以直接告诉你，Mac的这个目录在/Library/Python/下，这个下面可能会有多个版本的目录，没关系，放在最新的一个版本下的site-packages就行了。使用之前先import一下
 
-```python
+```
 from BeautifulSoup import BeautifulSoup
 ```
 
@@ -67,20 +76,20 @@ from BeautifulSoup import BeautifulSoup
 
 首先将上面的HTML代码赋给一个变量html如下，为了方便大家复制这里贴的是不带回车的，上面带回车的代码可以让大家看清楚HTML结构
 
-```python
+```
 html = '<html><head><title>Page title</title></head><body><p id="firstpara" align="center">This is paragraph<b>one</b>.</p><p id="secondpara" align="blah">This is paragraph<b>two</b>.</p></body></html>'
 
 ```
 
 初始化如下：
 
-```python
+```
 soup = BeautifulSoup(html)
 ```
 
 我们知道HTML代码可以看成一棵树，这个操作等于是把HTML代码解析成一种树型的数据结构并存储在soup中，注意这个数据结构的根节点不是<html>，而是soup，其中html标签是soup的唯一子节点，不信你试试下面的操作
 
-```python
+```
 print soup
 print soup.contents[0]
 print soup.contents[1]
@@ -94,69 +103,67 @@ print soup.contents[1]
 
 #### 单个节点
 
-* 根据节点名
+##### 根据节点名
+```
+## 查找head节点
+print soup.find('head') ## 输出为<head><title>Page title</title></head>
+## or
+## head = soup.head
+```
+这种方式查找到的是待查找节点最近的节点，比如这里待查找节点是soup，这里找到的是离soup最近的一个head（如果有多个的话）
 
-	```python
-	## 查找head节点
-	print soup.find('head') ## 输出为<head><title>Page title</title></head>
-	## or
-	## head = soup.head
-	```
+##### 根据属性
 
-	这种方式查找到的是待查找节点最近的节点，比如这里待查找节点是soup，这里找到的是离soup最近的一个head（如果有多个的话）
-
-* 根据属性
-
-	```python
-	 ## 查找id属性为firstpara的节点
-	 print soup.find(attrs={'id':'firstpara'})  
-	 ## 输出为<p id="firstpara" align="center">This is paragraph<b>one</b>.</p>
-	 ## 也可节点名和属性进行组合
-	 print soup.find('p', attrs={'id':'firstpara'})  ## 输出同上
-	```
+```
+ ## 查找id属性为firstpara的节点
+ print soup.find(attrs={'id':'firstpara'})  
+ ## 输出为<p id="firstpara" align="center">This is paragraph<b>one</b>.</p>
+ ## 也可节点名和属性进行组合
+ print soup.find('p', attrs={'id':'firstpara'})  ## 输出同上
+```
 	
-* 根据节点关系
+##### 根据节点关系
 
-	节点关系无非就是兄弟节点，父子节点这样的
+节点关系无非就是兄弟节点，父子节点这样的
 
-	```python
-	 p1 = soup.find(attrs={'id':'firstpara'}) ## 得到第一个p节点
-	 print p1.nextSibling ## 下一个兄弟节点
-	 ## 输出<p id="secondpara" align="blah">This is paragraph<b>two</b>.</p>
-	 p2 = soup.find(attrs={'id':'secondpara'}) ## 得到第二个p节点
-	 print p2.previousSibling ## 上一个兄弟节点
-	 ## 输出<p id="firstpara" align="center">This is paragraph<b>one</b>.</p>
-	 print p2.parent ## 父节点，输出太长这里省略部分 <body>...</body>
-	 print p2.contents[0] ## 第一个子节点，输出u'This is paragraph'
-	```
+```
+ p1 = soup.find(attrs={'id':'firstpara'}) ## 得到第一个p节点
+ print p1.nextSibling ## 下一个兄弟节点
+ ## 输出<p id="secondpara" align="blah">This is paragraph<b>two</b>.</p>
+ p2 = soup.find(attrs={'id':'secondpara'}) ## 得到第二个p节点
+ print p2.previousSibling ## 上一个兄弟节点
+ ## 输出<p id="firstpara" align="center">This is paragraph<b>one</b>.</p>
+ print p2.parent ## 父节点，输出太长这里省略部分 <body>...</body>
+ print p2.contents[0] ## 第一个子节点，输出u'This is paragraph'
+```
 
-	contents上面已经提到过，它存储的是所有子节点的序列
+contents上面已经提到过，它存储的是所有子节点的序列
 
 #### 多个节点
 将上面介绍的find改为findAll即可返回查找到的节点列表，所需参数都是一致的
 
-* 根据节点名
+##### 根据节点名
 
-	```python
-	## 查找所有p节点
-	soup.findAll('p')
-	```
+```
+## 查找所有p节点
+soup.findAll('p')
+```
 
-* 根据属性查找
+##### 根据属性查找
 
-	```python
-	## 查找id=firstpara的所有节点
-	soup.findAll(attrs={'id':'firstpara'}) 
-	```
+```
+## 查找id=firstpara的所有节点
+soup.findAll(attrs={'id':'firstpara'}) 
+```
 
-	需要注意的是，虽然在这个例子中只找到一个节点，但返回的仍是一个列表对象
+需要注意的是，虽然在这个例子中只找到一个节点，但返回的仍是一个列表对象
 
 上面的这些基本查找功能已经可以应付大多数情况，如果需要各个高级的查找，比如正则式，可以去看官方文档
 
 ### 获取文本
 getText方法可以获取节点下的所有文本，其中可以传递一个字符参数，用来分割每个各节点之间的文本
 
-```python
+```
 ## 获取head节点下的文本
 soup.head.getText()         ## u'Page title'
 ## or
@@ -174,7 +181,7 @@ soup.body.getText('\n')     ## u'This is paragraph\none\n.\nThis is paragraph\nt
 
 当我们提取到所有电影的信息后再按评分进行排序，选出最高的即可，这里贴出翻页提取和电影信息提取的代码
 
-```python
+```
 ## filename: Grab.py
 from BeautifulSoup import BeautifulSoup, Tag
 import urllib2
@@ -268,7 +275,7 @@ class Grab():
 
 接着我们再来写个测试样例
 
-```python
+```
 ## filename: test.py
 #encoding: utf-8
 from Grab import Grab
