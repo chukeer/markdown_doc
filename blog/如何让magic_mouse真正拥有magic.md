@@ -1,8 +1,8 @@
 Title: 如何让Magic Mouse真正拥有Magic 
-Date: 2016-09-06
-Modified: 2016-09-06
-Category: Language
-Tags: c++
+Date: 2014-12-03
+Modified: 2014-12-03
+Category: Skill
+Tags: mac
 Slug: 如何让Magic Mouse真正拥有Magic
 Author: littlewhite
 

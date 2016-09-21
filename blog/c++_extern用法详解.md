@@ -1,6 +1,6 @@
 Title: C++ extern声明变量详解
-Date: 2016-09-06
-Modified: 2016-09-06
+Date: 2014-08-26
+Modified: 2014-08-26
 Category: Language
 Tags: c++
 Slug: C++ extern声明变量详解

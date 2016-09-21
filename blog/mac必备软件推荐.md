@@ -1,7 +1,7 @@
 Title: Mac必备软件推荐 
-Date: 2016-09-06
+Date: 2014-10-11
 Category: Skill
-Tags: 
+Tags: mac
 Slug: Mac必备软件推荐
 Author: littlewhite
 

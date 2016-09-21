@@ -1,8 +1,8 @@
 Title: libevent evhttp学习——http服务端
-Date: 2016-09-06
-Modified: 2016-09-06
+Date: 2016-08-06
+Modified: 2016-08-06
 Category: Language
-Tags: c++
+Tags: c++, libevent, http
 Slug: libevent evhttp学习——http服务端
 Author: littlewhite
 

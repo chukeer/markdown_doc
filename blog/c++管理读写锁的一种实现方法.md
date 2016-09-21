@@ -1,6 +1,6 @@
 Title: C++管理读写锁的一种实现方法
-Date: 2016-09-06
-Modified: 2016-09-06
+Date: 2014-07-01
+Modified: 2014-07-01
 Category: Language
 Tags: c++
 Slug: C++管理读写锁的一种实现方法

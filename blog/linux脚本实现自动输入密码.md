@@ -1,4 +1,13 @@
-#linux脚本实现自动输入密码
+Title: linux脚本实现自动输入密码
+Date: 2014-11-12
+Modified: 2014-11-12
+Category: Skill
+Tags: linux
+Slug: linux脚本实现自动输入密码
+Author: littlewhite
+
+[TOC]
+
 使用Linux的程序员对输入密码这个举动一定不陌生，在Linux下对用户有严格的权限限制，干很多事情越过了权限就得输入密码，比如使用超级用户执行命令，又比如ftp、ssh连接远程主机等等，如下图
 
 <div align="center"><img src="http://littlewhite.us/pic/20141110/ssh_login.png"></div>

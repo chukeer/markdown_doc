@@ -1,9 +1,9 @@
-Title: 网站二三事
-Date: 2016-09-06
-Modified: 2016-09-06
+Title: Linux技巧——用dd生成指定大小的文件
+Date: 2014-12-07
+Modified: 2014-12-07
 Category: skill
 Tags: linux
-Slug: 网站二三事
+Slug: Linux技巧——用dd生成指定大小的文件
 Author: littlewhite
 
 [TOC]

@@ -1,6 +1,6 @@
 Title: 没有main函数的helloworld
-Date: 2016-09-06
-Modified: 2016-09-06
+Date: 2014-10-14
+Modified: 2014-10-14
 Category: Language
 Tags: c++
 Slug: 没有main函数的helloworld

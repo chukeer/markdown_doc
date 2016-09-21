@@ -1,5 +1,5 @@
 Title: Vim c++开发环境插件安装详解
-Date: 2016-09-06
+Date: 2014-09-02
 Category: Skill
 Tags: vim, c++
 Slug: Vim c++开发环境插件安装详解

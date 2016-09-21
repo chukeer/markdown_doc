@@ -1,6 +1,6 @@
 Title: extern “C”用法详解
-Date: 2016-09-06
-Modified: 2016-09-06
+Date: 2014-09-29
+Modified: 2014-09-29
 Category: Language
 Tags: c++
 Slug: extern “C”用法详解

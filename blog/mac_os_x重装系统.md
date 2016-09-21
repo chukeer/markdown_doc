@@ -1,7 +1,7 @@
 Title: Mac OS X重装操作系统
-Date: 2016-09-06
+Date: 2014-08-07
 Category: Skill
-Tags: 
+Tags: mac
 Slug: Mac OS X重装操作系统
 Author: littlewhite
 

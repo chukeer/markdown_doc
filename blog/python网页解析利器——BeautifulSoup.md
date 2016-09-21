@@ -1,7 +1,8 @@
 Title: python网页解析利器——BeautifulSoup
-Date: 2016-09-06
+Date: 2014-03-21
+Modified: 2014-03-21
 Category: Language
-Tags: python
+Tags: python, beautifulsoup
 Slug: python网页解析利器——BeautifulSoup
 Author: littlewhite
 

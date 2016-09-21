@@ -1,8 +1,8 @@
 Title: libevent evhttp学习——http客户端
-Date: 2016-09-06
-Modified: 2016-09-06
+Date: 2016-08-05
+Modified: 2016-08-05
 Category: Language
-Tags: c++, libevent
+Tags: c++, libevent, http
 Slug: libevent evhttp学习——http客户端
 Author: littlewhite
 

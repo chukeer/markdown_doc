@@ -1,9 +1,9 @@
-Title: c++实战——多人会话聊天室（二）
-Date: 2016-09-06
-Modified: 2016-09-06
+Title: c++实战——多人会话聊天室2
+Date: 2014-05-19
+Modified: 2014-05-19
 Category: Language
 Tags: c++
-Slug: c++实战——多人会话聊天室（二）
+Slug: c++实战——多人会话聊天室2
 Author: littlewhite
 
 [TOC]

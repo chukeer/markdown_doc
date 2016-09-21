@@ -1,3 +1,11 @@
+Title: Linux文件读写机制及优化方式
+Date: 2016-09-19
+Modified: 2016-09-19
+Category: Skill
+Tags: linux
+Slug: Linux文件读写机制及优化方式
+Author: littlewhite
+
 本文只讨论Linux下文件的读写机制，不涉及不同读取方式如read,fread,cin等的对比，这些读取方式本质上都是调用系统api read，只是做了不同封装。以下所有测试均使用open, read, write这一套系统api
 
 ## 缓存

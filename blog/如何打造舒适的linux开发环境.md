@@ -1,5 +1,5 @@
 Title: 如何打造舒适的linux开发环境
-Date: 2016-09-06
+Date: 2014-09-26
 Category: Skill
 Tags: linux
 Slug: 如何打造舒适的linux开发环境
