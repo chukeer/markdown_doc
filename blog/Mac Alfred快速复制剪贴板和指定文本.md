@@ -18,7 +18,7 @@ Author: littlewhite
 这两个需求Alfred都可以轻松搞定
 
 ### 打开Alfred剪贴板功能
-Alfred的剪贴板功能默认是关闭的，在preferences->Features->Clipboard->History的Clipboard History后面打勾即可，还可以选择剪贴板历史数据保存的时间
+Alfred的剪贴板功能默认是关闭的，在preferences->Features->Clipboard->History的Clipboard History后面打勾即可打开，还可以选择剪贴板历史数据保存的时间
 
 ![](http://littlewhite.us/pic/Alfred-enable-clipboard-history.jpg)
 
@@ -32,7 +32,7 @@ snip可以满足需求2，其实就是一个文本片段，并指定一个name�
 
 ![](http://littlewhite.us/pic/Alfred-call-clipboard.jpg)
 
-输入关键字可以搜索剪贴板和snip，回车之后会将内容直接粘贴到之前的app上。对于snip还有一个打开方式，就是通过Alfred关键词，先唤出Alfred搜索框，输入默认关键词snip和搜索内容即可对指定的snip进行复制和粘贴
+输入关键字可以搜索剪贴板和snip，回车之后会将内容直接粘贴到之前的app上。对于snip还有一个打开方式，先唤出Alfred搜索框，输入默认关键词snip和搜索内容即可对指定的snip进行复制和粘贴
 
 ![](http://littlewhite.us/pic/Alfred-call-snip.jpg)
 
