@@ -1,4 +1,3 @@
-
 Title: gdb调试技巧备忘
 Date: 2015-09-11
 Modified: 2015-09-11
@@ -66,7 +65,7 @@ list(l) </br>list *function*	|查看源码，函数
 directory(dir) *directory-name	*|添加源码搜索路径
 **查看变量**	|
 print(p) *variable-name*	|打印变量
-p **array-variable*@*length*	|打印数组的前length个变量
+p *array-variable@length	|打印数组的前length个变量
 p/*format* *variable-name*</br>*format*和printf格式近似</br>d: 整数</br>u: 无符号整数</br>c: 字符</br>f: 浮点数</br>x: 十六进制</br>o: 八进制</br>t: 二进制</br>r: raw格式	|按指定格式打印变量，如p/x variable-name代表以十六进制打印变量
 x/nfu *address*</br>nfu为可选的三个参数</br>n代表要打印的数据块数量</br>f为打印的格式，和p/format中一致</br>u为打印的数据块大小，有如下选择</br>b/h/w/g： 单/双/四/八字节，默认为4字节	|按指定格式查看内存数据，如x/7xh address表示从内存地址address开始打印7个双字节，每个双字节以十六进制显示
 ptype *variable*	|打印变量数据类型
