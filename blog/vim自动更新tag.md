@@ -2,7 +2,7 @@ Title: vim自动更新tag
 Date: 2015-04-10
 Modified: 2015-04-10
 Category: Skill
-Tags: Vim
+Tags: vim
 Slug: vim自动更新tag
 Author: littlewhite
 

@@ -2,7 +2,7 @@ Title: vim比较目录diff
 Date: 2015-04-27
 Modified: 2015-04-27
 Category: Skill
-Tags: Vim
+Tags: vim
 Slug: vim比较目录diff
 Author: littlewhite
 
