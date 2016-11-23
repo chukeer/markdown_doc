@@ -1,3 +1,13 @@
+Title: linux shell发送邮件
+Date: 2016-11-23
+Modified: 2016-11-23
+Category: Skill
+Tags: linux, shell
+Slug: linux shell发送邮件
+Author: littlewhite
+
+[TOC]
+
 ## 一封最简单的邮件
     echo -e "To: handy1989@qq.com\nCC: handy1989@qq.com\nFrom: handy<handy@test.com>\nSubject: test\n\nhello world" | sendmail -t
     
@@ -21,7 +31,7 @@
 ![](http://littlewhite.us/pic/mail-qq.png)
 
 
-## 在邮件标题使用中文
+## 邮件标题使用中文
 如果邮件标题直接使用中文字符会导致收到的邮件乱码，为了避免这种情况，应该对中文进行base64编码，而这也是邮件最常用的编码方式，当然，在进行base64编码之前先得对中文字符进行编码（UTF-8或GBK等等），这和html的编码是一样的概念，采用UTF-8和base64编码的格式如下
 
     =?UTF-8?B?xxxxxx?=
