@@ -11,7 +11,7 @@ Author: littlewhite
 ## 一封最简单的邮件
     echo -e "To: handy1989@qq.com\nCC: handy1989@qq.com\nFrom: handy<handy@test.com>\nSubject: test\n\nhello world" | sendmail -t
     
-看上去很复杂，其实就是sendmail程序从标准输入读取邮件源码，-t参数表示从邮件源码提取收件人信息，然后发送到收件人的邮件服务器，我们稍做整理，将邮件源码保存在email.txt中如下
+看上去有点复杂，其实就是sendmail程序从标准输入读取邮件源码，-t参数表示从邮件源码提取收件人信息，然后发送到收件人的邮件服务器，我们稍做整理，将邮件源码保存在email.txt中如下
 
     To: handy1989@qq.com
     CC: handy1989@qq.com
