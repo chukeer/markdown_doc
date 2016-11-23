@@ -16,6 +16,7 @@ import语法有两种
 
         import Module
         import Module as xx
+        
 2. 从模块import对象（下级模块，类，函数，变量等）
 
         from Module import Name
@@ -77,7 +78,7 @@ python所有加载的模块信息都存放在sys.modules结构中，当import一
 当一个目录下有`__init__.py`文件时，该目录就是一个python的包 
  
 import包和import单个文件是一样的，我们可以这样类比：  
->import单个文件时，文件里的类，函数，变量都可以作为import的对象
+>import单个文件时，文件里的类，函数，变量都可以作为import的对象  
 >import包时，包里的子包，文件，以及\_\_init\_\_.py里的类，函数，变量都可以作为import的对象
  
 假设有如下目录结构
