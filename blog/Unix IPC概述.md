@@ -2,7 +2,7 @@ Title: Unix IPC概述
 Date: 2016-12-11
 Modified: 2016-12-11
 Category: Tool
-Tags: linux, ipc
+Tags: ipc
 Slug: Unix IPC概述
 Author: littlewhite
 
@@ -144,7 +144,7 @@ mq\_notify就是接受者用来注册或反注册通知信号的，若sevp非空
 功能和文件API的close，unlink类似
 
 ### System V
-### 创建/打开消息队列
+#### 创建/打开消息队列
 
     int msgget(key_t key, int msgflg)
     
