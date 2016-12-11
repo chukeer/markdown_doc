@@ -1,4 +1,13 @@
-# Unix IPC概述
+Title: Unix IPC概述
+Date: 2016-12-11
+Modified: 2016-12-11
+Category: Tool
+Tags: linux, ipc
+Slug: Unix IPC概述
+Author: littlewhite
+
+[TOC]
+
 IPC全称Inter-Process Communication，即进程间通信。我们知道一个进程可以有多个线程，他们可以共享进程的全部资源，比如打开的文件句柄，创建的全局变量等，因此线程间通信相对就容易一些，而不同进程拥有独立的虚拟地址空间，他们之间想要通信就需要特定的IPC方法。我们只讨论同一主机上的进程间通信
 
 这里主要介绍管道，FIFO，消息队列三种IPC通信机制
