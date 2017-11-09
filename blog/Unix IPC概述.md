@@ -1,25 +1,28 @@
 Title: Unix IPC概述
 Date: 2016-12-11
 Modified: 2016-12-11
-Category: Tool
+Category: Skill
 Tags: ipc
 Slug: Unix IPC概述
 Author: littlewhite
 
 [TOC]
 
-IPC全称Inter-Process Communication，即进程间通信。我们知道一个进程可以有多个线程，他们可以共享进程的全部资源，比如打开的文件句柄，创建的全局变量等，因此线程间通信相对就容易一些，而不同进程拥有独立的虚拟地址空间，他们之间想要通信就需要特定的IPC方法。我们只讨论同一主机上的进程间通信
+IPC全称Inter-Process Communication，即进程间通信。我们知道一个进程可以有多个线程，他们可以共享进程的全部资源，比如打开的文件句柄，创建的全局变量等，因此线程间通信相对就容易一些，而不同进程拥有独立的虚拟地址空间，他们之间想要通信就需要特定的IPC方法。我们只讨论同一主机上的进程间通信，socket通信是广义上的进程间通信
 
 这里主要介绍管道，FIFO，消息队列三种IPC通信机制
 
 ## 管道
 管道是一种单向通信的数据通道，其表现为一对文件句柄，一个写入端和一个读取端，模型如下
+
 ![](http://littlewhite.us/pic/pipe1.png)
 
 即用户空间创建管道，得到两个文件句柄，往fd[1]写数据，从fd[0]读数据，虽然管道是由单个进程创建，但很少在单个进程内使用，最常用的是父子进程之间进行通信，如下
+
 ![](http://littlewhite.us/pic/pipe2.png)
 
 首先父进程创建管道后调用fork生成子进程，子进程继承了父进程的管道句柄，接着父进程关闭管道的读取端，子进程关闭管道的写入端，这样父子进程之间就生成了一个单向数据流，如下
+
 ![](http://littlewhite.us/pic/pipe3.png)
 
 这样父进程往fd[1]写数据，子进程就能从fd[0]读到
@@ -29,6 +32,7 @@ IPC全称Inter-Process Communication，即进程间通信。我们知道一个�
     who | sort | head -1
     
 创建了两个管道，还把每个管道的读取端复制到相应进程的标准输入，把写入端复制到相应进程的标准输出，其数据流通如下
+
 ![](http://littlewhite.us/pic/pipe4.png)
 
 说了这么多模型，最后来看一下创建管道的API
@@ -49,7 +53,7 @@ pathname为文件路径，mode为文件权限，和open的含义一样，返回�
      $ mkfifo fifo && ls -li fifo
     1187053 prw-rw-r-- 1 zhangmenghan zhangmenghan 0 12月  6 22:14 fifo
     
-可以看到文件fifo的的类型为p，代表的是管道，并且管道文件也是占用一个inode的。既然是文件，那就可以通过write/read/close/unlink这一系列文件API来操作了，不同点在于，对管道和FIFO的write总是往末尾添加数据，read则总是从开头返回数据，如果对管道或FIFO进行lseek操作，会反回ESPIPE错误
+可以看到文件fifo的类型为p，代表的是管道，并且管道文件也是占用一个inode的。既然是文件，那就可以通过write/read/close/unlink这一系列文件API来操作了，不同点在于，对管道和FIFO的write总是往末尾添加数据，read则总是从开头返回数据，如果对管道或FIFO进行lseek操作，会返回ESPIPE错误
 
 FIFO的读写模型和管道类似，只不过管道返回的是两个句柄，一个写一个读，而FIFO只有一个句柄，其读写属性是在open时指定的，并且它们都可以通过非阻塞方式进行IO操作，只需对句柄设置O_NONBLOCK即可，可通过fcntl函数设置
 
@@ -69,9 +73,9 @@ FIFO的读写模型和管道类似，只不过管道返回的是两个句柄，�
 6. 当关闭管道或FIFO，里面的数据会被丢弃
 
 ## 消息队列
-管道和FIFO都是面向字节流的通信，也就是说读取方并不知道数据的边界，如果写入方将一组的数据写入管道或FIFO，读取方必须知道这组数据的实际长度和格式才能准确将数据读取并解析出来，消息队列提供了一种面相消息的通信方式
+管道和FIFO都是面向字节流的通信，也就是说读取方并不知道数据的边界，如果写入方将一组数据写入管道或FIFO，读取方必须知道这组数据的实际长度和格式才能准确将数据读取并解析出来，消息队列提供了一种面相消息的通信方式
 
-消息队列可以被认为是一个消息链表，有写权限的进程往链表放置消息，有读权限的进程从里面取消息。写入者可以随时往消息队列放置消息，而不用管此时是否有读取这，这和管道以及FIFO不同，消息队列有随内核的持续性，即便读写进程退出，消息队列仍然存在
+消息队列可以被认为是一个消息链表，有写权限的进程往链表放置消息，有读权限的进程从里面取消息。写入者可以随时往消息队列放置消息，而不用管此时是否有读取者，这和管道以及FIFO不同，消息队列有随内核的持续性，即便读写进程退出，消息队列仍然存在
 
 unix上的消息队列实现有两种，Posix消息队列和System V消息队列，这两者都应用的比较广泛，System V消息队列诞生的更早，后来的Posix消息队列加入了一些新特性，因此也被一些新开发的程序所使用，两者提供的API有很多相似性，也有如下一些差别
 
@@ -79,6 +83,7 @@ unix上的消息队列实现有两种，Posix消息队列和System V消息队列
 2. 当往一个空队列放置消息时，Posix消息队列允许产生一个信号或启动一个线程，System V消息队列则不提供类似极致
 
 消息队列中的每个消息都具有如下属性
+
 1. 一个无符号整数优先级（Posix）或一个长整形类型（System V）
 2. 消息的数据部分长度（可以为0）
 3. 数据本身（如果长度大于0）
@@ -89,8 +94,7 @@ unix上的消息队列实现有两种，Posix消息队列和System V消息队列
 #### 创建/打开消息队列
 
     mqd_t mq_open(const char *name, int oflag);
-    mqd_t mq_open(const char *name, int oflag, mode_t mode,
-                     struct mq_attr *attr);
+    mqd_t mq_open(const char *name, int oflag, mode_t mode, struct mq_attr *attr);
                      
 其中name是消息队列名字，其格式必须符合文件系统路径名，但并不要求是真实存在的文件，oflag是O\_RANDLY，O\_WRONLY或O\_RDWR之一，还可以按位或上O\_CREATE，O\_EXCL，O\_NONBLOCK之一，这和文件API open的参数类似，如果是打开已存在消息队列，这两个参数就够了，如果是新建消息队列，则需要带上mode和atrr参数，mode也和open参数一样是指定读写权限，attr可以设置消息队列属性，如果为NULL则使用默认属性
 
@@ -115,10 +119,8 @@ unix上的消息队列实现有两种，Posix消息队列和System V消息队列
     
 #### 发送/接收消息
 
-    int mq_send(mqd_t mqdes, const char *msg_ptr,
-                 size_t msg_len, unsigned msg_prio);
-    ssize_t mq_receive(mqd_t mqdes, char *msg_ptr,
-                 size_t msg_len, unsigned *msg_prio);
+    int mq_send(mqd_t mqdes, const char *msg_ptr, size_t msg_len, unsigned msg_prio);
+    ssize_t mq_receive(mqd_t mqdes, char *msg_ptr, size_t msg_len, unsigned *msg_prio);
                  
 前三个参数和write/read类似，最后一个参数代表消息优先级
 
@@ -130,7 +132,7 @@ unix上的消息队列实现有两种，Posix消息队列和System V消息队列
     
 当往一个空消息队列放置消息时，Posix消息队列可以发送一个通知，这个通知就是会向接收进程发送一个信号。这是System V消息队列所不具备的
 
-mq\_notify就是接受者用来注册或反注册通知信号的，若sevp非空则代表注册，若sevp为空则代表反注册。这种通知机制还有以下特点
+mq\_notify就是接收者用来注册或反注册通知信号的，若sevp非空则代表注册，若sevp为空则代表反注册。这种通知机制还有以下特点
 
 1. 任一时刻只有一个进程可以被注册为接收某个指定队列的通知
 2. 如果接受者阻塞在mq_received中，通知不会发出
@@ -182,12 +184,15 @@ msgflag可以指定为0，也可以指定为IPC\_NOWAIT，当指定了IPC\_NOWAI
 
 #### 接收消息
 
-    ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp,
-                   int msgflg);
+    ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
                    
 msgp，msgsz，msgflg的含义和msgsnd函数一样，msgtyp代表希望读取的消息类型
 
-若msgtyp为0，则返回队列中第一个消息，若msgtyp大于0，则返回队列中类型值（msgbuf模板中的mtype字段）小于或等于msgtyp的绝对值的消息中类型值最小的第一个消息
+1. msgtyp等于0，返回消息队列中第一个消息
+2. msgtyp大于0，返回消息队列中类型值为msgtyp的第一个消息
+3. msgtyp小于0，返回消息队列中类型值小于等于msgtyp绝对值的消息中类型值最小的第一个消息
+
+比如消息队列中有如下消息，第一个消息类型值为2，第二个为1，第三个为3，第4个为1，当msgtyp为0时，返回第一个消息，当msgtyp为3时返回第三个消息，当msgtyp为-3时返回第二个消息
 
 #### 修改消息队列
 

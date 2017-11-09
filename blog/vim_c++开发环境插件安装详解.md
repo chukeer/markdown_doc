@@ -49,7 +49,7 @@ vim插件安装的教程在互联网上已经数不胜数，但是质量也参�
 	mv ~/.vimrc ~/.vimrcbak
 	mv ~/.vim ~/.vimbak
 	git clone https://github.com/handy1989/vim.git
-	mv vim/.vimrc ~/.vim ~/
+	mv vim/.vimrc vim/.vim ~/
 
 
 
