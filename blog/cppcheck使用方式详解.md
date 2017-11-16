@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# cppcheck使用方式详解
-=======
 Title: cppcheck使用方式详解 
 Date: 2017-11-09
 Modified: 2017-11-09
@@ -10,7 +7,6 @@ Slug: cppcheck使用方式详解
 Author: littlewhite
 
 [TOC]
->>>>>>> deafb6bb75f8350a7d4f1bebb85ba7f79f9f4369
 
 顾名思义，cppcheck是对C++代码的静态检查工具，只需对源代码进行静态扫描，即可发现一些隐患，包括如下分类
 
@@ -198,11 +194,7 @@ cppcheck-htmlreport参数选项说明如下
 
 展示结果如下
 
-<<<<<<< HEAD
-![](images/cppcheck.png)
-=======
 ![](http://littlewhite.us/pic/cppcheck.png)
->>>>>>> deafb6bb75f8350a7d4f1bebb85ba7f79f9f4369
 
 ## 集成到其它工具
 cppcheck可以和git, svn, jenkins等平台和工具结合，在svn和git commit之前执行相应脚本，或者在jenkins项目构建之后执行相应检查，具体用法参考以下链接
@@ -225,8 +217,4 @@ cppcheck可以和git, svn, jenkins等平台和工具结合，在svn和git commit
 
 ## 参考文档
 * cppcheck官网 [http://cppcheck.net/](http://cppcheck.net/)
-<<<<<<< HEAD
 * cppcheck1.8.1使用文档 [http://cppcheck.net/manual.pdf](http://cppcheck.net/manual.pdf)
-=======
-* cppcheck1.8.1使用文档 [http://cppcheck.net/manual.pdf](http://cppcheck.net/manual.pdf)
->>>>>>> deafb6bb75f8350a7d4f1bebb85ba7f79f9f4369
