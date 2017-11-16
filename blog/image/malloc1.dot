@@ -1,0 +1,28 @@
+digraph structs {
+    node [shape=plaintext]
+    rankdir = TB;
+
+    first [shape="box", label="first"]
+
+    block1 [label=<
+        <table border="0" cellborder="1" cellspacing="0">
+            <tr>
+                <td bgcolor="gray" port="f1.0"></td>
+                <td bgcolor="gray" port="f1" width="80">buf1</td>
+                <td port="f2.0"></td>
+                <td port="f2" width="80">chunk</td>
+                <td port="f3">next_ptr</td>
+                <td>next_size</td>
+            </tr>
+        </table>
+    >];
+
+
+    null [shape="box", label="null"]
+
+first -> block1:"f2.0":nw;
+block1:"f2.0":s -> null;
+block1:"f3":s -> null;
+
+}
+

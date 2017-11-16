@@ -1,0 +1,10 @@
+digraph structs {
+    node [shape=plaintext]
+    rankdir = TB;
+
+    block1 [shape="record", label="chunk1|chunk2|...|chunkn|<f1> next_ptr|next_size"];
+    block2 [shape="record", label="chunk1|chunk2|...|chunkn|<f1> next_ptr|next_size"];
+
+    block1:f1 -> block2:w;
+}
+

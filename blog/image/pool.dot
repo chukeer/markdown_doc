@@ -1,0 +1,16 @@
+digraph structs {
+    node [shape=plaintext];
+    block1 [label=<
+        <table border="0" cellborder="1" cellspacing="0">
+            <tr>
+                <td width="30">chunk</td>
+                <td>next_ptr</td>
+                <td>next_size</td>
+            </tr>
+        </table>
+    >];
+    block2 [shape=record, label="<f0> chunks|next_ptr|next_size"];
+    block3 [shape=record, label="<f0> chunks|next_ptr|next_size"];
+    block1 -> block2:w;
+    block2 -> block3:w;
+}

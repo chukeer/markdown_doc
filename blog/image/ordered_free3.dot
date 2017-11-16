@@ -1,0 +1,43 @@
+digraph structs {
+    node [shape=plaintext]
+
+    block1 [label=<
+        <table border="0" cellborder="1" cellspacing="0">
+            <tr>
+                <td port="f1.0"></td>
+                <td port="f1" width="80">buf1</td>
+                <td port="f2.0"></td>
+                <td port="f2" width="80">buf2</td>
+                <td port="f3">next_ptr</td>
+                <td>next_size</td>
+            </tr>
+        </table>
+    >];
+
+    block2 [label=<
+        <table border="0" cellborder="1" cellspacing="0">
+            <tr>
+                <td port="f1.0"></td>
+                <td port="f1" width="80">buf3</td>
+                <td bgcolor="gray" port="f2.0"></td>
+                <td bgcolor="gray" port="f2" width="80">buf4</td>
+                <td port="f3.0"></td>
+                <td port="f3" width="80">chunk</td>
+                <td port="f4.0"></td>
+                <td port="f4" width="80">chunk</td>
+                <td port="f5">next_ptr</td>
+                <td>next_size</td>
+            </tr>
+        </table>
+    >];
+
+    first [shape="box", label="first"]
+
+    first -> block1:"f1.0":w;
+block1:"f1.0":n -> block1:"f2.0":nw;
+block1:"f2.0":s -> block2:"f1.0":nw;
+block2:"f1.0":s -> block2:"f3.0":sw
+block2:"f3.0":n -> block2:"f4.0":nw;
+
+}
+

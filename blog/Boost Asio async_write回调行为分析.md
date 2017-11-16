@@ -1,4 +1,17 @@
+<<<<<<< HEAD
 # Boost Asio async_write回调行为分析
+=======
+Title: Boost Asio async_write回调行为分析
+Date: 2017-11-09
+Modified: 2017-11-09
+Category: Language
+Tags: boost
+Slug: Boost Asio async_write回调行为分析
+Author: littlewhite
+
+[TOC]
+
+>>>>>>> deafb6bb75f8350a7d4f1bebb85ba7f79f9f4369
 本文主要分析async_write在一些边界情况下的回调行为，包括如下几点
 
 1. 对方接受缓慢
@@ -21,7 +34,11 @@ async_write底层调用的async_write_some，可能会分多次调用，最终�
 ## 发送缓冲区写满的回调分析
 我们设计这样一种场景，当客户端连接上之后，服务端即调用async_write向其发送数据，并且在回调函数里继续调用async_write，观察回调情况，流程如下
 
+<<<<<<< HEAD
 ![](image/async_write.png)
+=======
+![](http://littlewhite.us/pic/async_write.png)
+>>>>>>> deafb6bb75f8350a7d4f1bebb85ba7f79f9f4369
 
 每次async_write发送10K数据，并且客户端连接上来之后不调用recv，模拟接受缓慢的场景，观察on_write调用次数，关键代码如下
 
@@ -70,16 +87,28 @@ async_write底层调用的async_write_some，可能会分多次调用，最终�
 
 **客户端连接上来之后（即步骤2完成之后）服务端一共调用了142次回调，第143次async_write的回调并没有调用**
 
+<<<<<<< HEAD
 ![](image/async_write1.1.png)
 
 **此时客户端的接收缓冲区已满（注意观察两图的时间戳）**
 
 ![](image/async_write1.3.png)
+=======
+![](http://littlewhite.us/pic/async_write1.1.png)
+
+**此时客户端的接收缓冲区已满（注意观察两图的时间戳）**
+
+![](http://littlewhite.us/pic/async_write1.3.png)
+>>>>>>> deafb6bb75f8350a7d4f1bebb85ba7f79f9f4369
 
 
 **服务端退出之后客户端仍旧能读到数据，并且读到的数据包（这里以10K作为一个数据包）数量正好介于142和143之间**
 
+<<<<<<< HEAD
 ![](image/async_write1.2.png)
+=======
+![](http://littlewhite.us/pic/async_write1.2.png)
+>>>>>>> deafb6bb75f8350a7d4f1bebb85ba7f79f9f4369
 
 结合前面的基础知识分析这个过程如下
 
