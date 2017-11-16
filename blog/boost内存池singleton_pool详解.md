@@ -1,4 +1,12 @@
-# boost内存池singleton_pool详解
+Title: boost内存池singleton_pool详解 
+Date: 2017-11-16
+Modified: 2017-11-16
+Category: Language
+Tags: c++, boost
+Slug: boost内存池singleton_pool详解
+Author: littlewhite
+
+[TOC]
 ## 基本概念
 内存池可以避免频繁分配释放内存时导致操作系统内存碎片的问题
 
